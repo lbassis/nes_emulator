@@ -1,4 +1,4 @@
-test:
+tests:
 	g++ tests.cpp -o tests
 	./tests
 
