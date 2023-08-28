@@ -1,4 +1,4 @@
-#include "cpu.hpp"
+#include "cpu.h"
 
 using namespace std;
 using std::vector;
