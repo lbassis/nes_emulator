@@ -39,16 +39,26 @@ private:
   uint16_t pc;
   uint8_t memory[0xFFFF];
 
+  /* cpu_registers.cpp */
   void set_zero_flag(bool flag);
   void set_negative_flag(bool flag);
   void update_zero_and_negative(uint8_t val);
+
+  /* cpu_memory.cpp */
   uint8_t mem_read(uint16_t address);
   void mem_write(uint16_t address, uint8_t data);
   
 public:
 
-  cpu();
-  void print_status();
+  cpu() : accumulator(0), status(0), pc(PC_INITIAL_VALUE) {}
+
+  /* cpu_general.cpp */
+  void reset();    
+  void load(vector<uint8_t> program);
+  void run();
+  void load_and_run(vector<uint8_t> program);
+  
+  /* cpu_registers.cpp */
   uint8_t get_acc();
   uint8_t get_reg_x();
 
@@ -59,10 +69,9 @@ public:
   void set_acc(uint8_t val);
   void set_reg_x(uint8_t val);
 
-  void reset();    
-  void run();
-  void load(vector<uint8_t> program);
-  void load_and_run(vector<uint8_t> program);
+  void print_status();
+
+  /* cpu_memory.cpp */
   uint16_t mem_read_u16(uint16_t address);
   void mem_write_u16(uint16_t address, uint16_t data);
 

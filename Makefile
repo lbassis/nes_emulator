@@ -1,5 +1,5 @@
 tests: 
-	g++ -o tests cpu.cpp tests.cpp
+	g++ -o tests cpu_registers.cpp cpu_memory.cpp cpu_general.cpp tests.cpp
 	./tests
 
 clean:
