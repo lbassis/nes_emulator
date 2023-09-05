@@ -34,10 +34,13 @@ private:
   };
 
   uint8_t accumulator;
-  uint8_t reg_x;
+  uint8_t reg_x, reg_y;
   uint8_t status;
   uint16_t pc;
   uint8_t memory[0xFFFF];
+
+  /* cpu general */
+  uint16_t get_operand_address(AdressingMode mode);
 
   /* cpu_registers.cpp */
   void set_zero_flag(bool flag);
@@ -47,20 +50,21 @@ private:
   /* cpu_memory.cpp */
   uint8_t mem_read(uint16_t address);
   void mem_write(uint16_t address, uint8_t data);
-  
+
 public:
 
   cpu() : accumulator(0), status(0), pc(PC_INITIAL_VALUE) {}
 
   /* cpu_general.cpp */
-  void reset();    
+  void reset();
   void load(vector<uint8_t> program);
   void run();
   void load_and_run(vector<uint8_t> program);
-  
+
   /* cpu_registers.cpp */
   uint8_t get_acc();
   uint8_t get_reg_x();
+  uint8_t get_reg_y();
 
   uint8_t get_status();
   bool get_zero();
