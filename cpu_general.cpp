@@ -6,7 +6,7 @@ using std::vector;
 uint16_t wraparound_sum(uint16_t x, uint16_t y) { return (x + y > 0xFF) ? y - x : x + y; }
 uint16_t wraparound_sum_u16(uint16_t x, uint16_t y) { return (x + y > 0xFFFF) ? y - x : x + y; }
 
-uint16_t cpu::get_operand_address(AdressingMode mode) {
+uint16_t cpu::get_operand_address(AddressingMode mode) {
 
   switch (mode) {
   case Immediate: /* the memory address are the 2 bytes from the program counter */
@@ -41,12 +41,19 @@ uint16_t cpu::get_operand_address(AdressingMode mode) {
   }
 }
 
+void cpu::lda(AddressingMode mode) {
+  auto address = get_operand_address(mode);
+  auto data = mem_read(address); /* LDA reads always 1 byte */
+
+  this->accumulator = data;
+  update_zero_and_negative(this->accumulator);
+}
 
 void cpu::reset() {
-  accumulator = 0;
-  reg_x = 0;
-  status = 0;
-  pc = mem_read_u16(PC_INITIAL_VALUE_ADDRESS);
+  this->accumulator = 0;
+  this->reg_x = 0;
+  this->status = 0;
+  this->pc = mem_read_u16(PC_INITIAL_VALUE_ADDRESS);
 }
 
 void cpu::load(vector<uint8_t> program) {
@@ -69,12 +76,8 @@ void cpu::run() {
       return;
 
     case 0xA9: { /* LDA */
-      auto param = mem_read(pc);
-      pc++;
-
-      accumulator = param;
-
-      update_zero_and_negative(accumulator);
+      lda(Immediate);
+      this->pc += 1;
       break;
     }
 

@@ -20,7 +20,7 @@ using std::vector;
 class cpu {
 private:
 
-  enum AdressingMode {
+  enum AddressingMode {
     Immediate,
     ZeroPage,
     ZeroPage_X,
@@ -40,7 +40,7 @@ private:
   uint8_t memory[0xFFFF];
 
   /* cpu general */
-  uint16_t get_operand_address(AdressingMode mode);
+  uint16_t get_operand_address(AddressingMode mode);
 
   /* cpu_registers.cpp */
   void set_zero_flag(bool flag);
@@ -60,6 +60,7 @@ public:
   void load(vector<uint8_t> program);
   void run();
   void load_and_run(vector<uint8_t> program);
+  void lda(AddressingMode mode);
 
   /* cpu_registers.cpp */
   uint8_t get_acc();
