@@ -1,4 +1,5 @@
 #include "../cpu.h"
+#include "assert.h"
 
 #include "general.h"
 #include "memory.h"
@@ -23,13 +24,16 @@ int main() {
   test_inx_overflow(tests_made, tests_passed);
   
   test_first_ops(tests_made, tests_passed);
-  
-  cout << "Passed " << tests_passed << "/" << tests_made << endl;
+
+  cout << ((tests_passed == tests_made) ? GREEN_TEXT : RED_TEXT);
+  cout << "Passed " << tests_passed << "/" << tests_made << RESET_TEXT << endl;
 
   tests_made = tests_passed = 0;
 
   cout << "Memory tests:" << endl;
   read_8000(tests_made, tests_passed);
   write_and_read(tests_made, tests_passed);
+
+  cout << ((tests_passed == tests_made) ? GREEN_TEXT : RED_TEXT);
   cout << "Passed " << tests_passed << "/" << tests_made << endl;
 }
